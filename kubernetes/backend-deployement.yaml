@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+Kind: Deployment
+metadata:
+  naame: employee-backend
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      app: employee-backend
+  template:
+    metadata:
+      name: mytemplate
+      labels:
+        app: employee-backend
+   spec:
+     containers:
+       - name: backend
+         image: 946846710175.dkr.ecr.ap-south-1.amazonaws.com/backend:latest
+         ports:
+           - containerPort: 5000
+
+
+
