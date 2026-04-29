@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee App</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      text-align: center;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #data {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Employees List</h1>
+
+  <div id="data">Loading employee details...</div>
+
+  <script>
+    async function loadEmployees() {
+      try {
+        const response = await fetch("http://3.110.25.131:5000/employees");
+
+        if (!response.ok) {
+          throw new Error("Failed to connect backend");
+        }
+
+        const employees = await response.json();
+
+        let output = "";
+
+        employees.forEach(emp => {
+          output += `
+            <div class="card">
+              <strong>${emp.name}</strong><br>
+              ${emp.role}
+            </div>
+          `;
+        });
+
+        document.getElementById("data").innerHTML = output;
+
+      } catch (error) {
+        document.getElementById("data").innerHTML =
+          `<p class="error">Failed to fetch employee details</p>`;
+      }
+    }
+
+    loadEmployees();
+  </script>
+
+</body>
+</html>
